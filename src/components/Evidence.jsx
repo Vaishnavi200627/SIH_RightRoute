@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import jsPDF from 'jspdf';
+import { FileLock, Upload, Copy, Check, Download, Shield, CircleCheck, Loader2 } from 'lucide-react';
 import { sha256 } from '../lib/hash';
 import { t } from '../i18n/strings';
 import { tierLabel } from '../lib/engine';
@@ -44,8 +45,6 @@ export default function Evidence({ lang, result }) {
 
     y = 100;
     doc.setTextColor(15, 23, 42);
-
-    // Rule meta
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(100, 116, 139);
@@ -58,7 +57,6 @@ export default function Evidence({ lang, result }) {
       y += 12;
     }
 
-    // Section: Route
     if (result) {
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
@@ -69,7 +67,6 @@ export default function Evidence({ lang, result }) {
       doc.text(result.label, margin, y);
       y += 22;
 
-      // Why
       doc.setFontSize(12);
       doc.text('Why this route', margin, y);
       y += 16;
@@ -83,7 +80,6 @@ export default function Evidence({ lang, result }) {
       }
       y += 10;
 
-      // Actions
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(15, 23, 42);
@@ -99,7 +95,6 @@ export default function Evidence({ lang, result }) {
       });
       y += 10;
 
-      // Evidence to preserve
       if (y > 620) { doc.addPage(); y = margin; }
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
@@ -116,7 +111,6 @@ export default function Evidence({ lang, result }) {
       }
       y += 10;
 
-      // Resources
       if (y > 620) { doc.addPage(); y = margin; }
       doc.setFontSize(12);
       doc.setFont('helvetica', 'bold');
@@ -137,7 +131,6 @@ export default function Evidence({ lang, result }) {
       }
     }
 
-    // Hash section
     if (hash && file) {
       if (y > 620) { doc.addPage(); y = margin; }
       y += 10;
@@ -163,7 +156,6 @@ export default function Evidence({ lang, result }) {
       y += hashLines.length * 11;
     }
 
-    // Footer disclaimer
     doc.setFontSize(8);
     doc.setFont('helvetica', 'italic');
     doc.setTextColor(148, 163, 184);
@@ -177,41 +169,93 @@ export default function Evidence({ lang, result }) {
   }
 
   return (
-    <section className="mt-6 bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-      <h3 className="font-bold text-slate-900 mb-1">{t(lang, 'evidenceSectionTitle')}</h3>
-      <p className="text-xs text-slate-500 mb-4">{t(lang, 'evidenceSectionDesc')}</p>
-
-      <label className="block">
-        <span className="text-sm font-medium text-slate-700">{t(lang, 'uploadLabel')}</span>
-        <input
-          type="file"
-          onChange={handleFile}
-          className="mt-2 block w-full text-sm text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100"
-        />
-      </label>
-
-      {file && (
-        <div className="mt-4">
-          <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
-            <span>{t(lang, 'hashLabel')}</span>
-            {hash && !busy && (
-              <button onClick={copy} className="text-teal-600 hover:text-teal-700 font-medium">
-                {copied ? t(lang, 'copied') : 'Copy'}
-              </button>
-            )}
+    <section className="mt-6 bg-white rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/40 overflow-hidden">
+      <div className="bg-gradient-to-r from-teal-500 to-cyan-600 px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-white/20 backdrop-blur flex items-center justify-center">
+            <FileLock className="w-4 h-4 text-white" />
           </div>
-          <div className="font-mono text-[11px] bg-slate-900 text-emerald-300 p-3 rounded-lg break-all">
-            {busy ? t(lang, 'hashing') : hash}
+          <div>
+            <div className="text-[10px] font-bold text-white/80 uppercase tracking-wider">
+              Module F
+            </div>
+            <h3 className="text-sm font-bold text-white uppercase tracking-wide">
+              {t(lang, 'evidenceSectionTitle')}
+            </h3>
           </div>
         </div>
-      )}
+        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/15 text-[10px] font-medium text-white">
+          <Shield className="w-3 h-3" />
+          Local only
+        </span>
+      </div>
 
-      <button
-        onClick={downloadActionPlan}
-        className="mt-4 w-full py-3 rounded-xl bg-teal-600 text-white font-semibold hover:bg-teal-700 transition"
-      >
-        {t(lang, 'downloadPdf')}
-      </button>
+      <div className="p-6">
+        <p className="text-xs text-slate-500 mb-4">{t(lang, 'evidenceSectionDesc')}</p>
+
+        <label className="block">
+          <span className="text-sm font-medium text-slate-700 mb-2 block">
+            {t(lang, 'uploadLabel')}
+          </span>
+          <div className="relative">
+            <input
+              type="file"
+              onChange={handleFile}
+              className="block w-full text-sm text-slate-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-gradient-to-r file:from-teal-50 file:to-cyan-50 file:text-teal-700 hover:file:from-teal-100 hover:file:to-cyan-100 file:cursor-pointer cursor-pointer border-2 border-dashed border-slate-300 rounded-xl p-2 hover:border-teal-300 transition"
+            />
+            <Upload className="absolute right-5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none hidden sm:block" />
+          </div>
+        </label>
+
+        {file && (
+          <div className="mt-4 bg-slate-50 rounded-xl border border-slate-200 p-4">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2 text-xs text-slate-600">
+                <CircleCheck className="w-3.5 h-3.5 text-teal-600" />
+                <span className="font-medium">{file.name}</span>
+                <span className="text-slate-400">
+                  ({(file.size / 1024).toFixed(1)} KB)
+                </span>
+              </div>
+              {hash && !busy && (
+                <button
+                  onClick={copy}
+                  className="inline-flex items-center gap-1.5 text-xs font-medium text-teal-700 hover:text-teal-800 px-2.5 py-1 rounded-lg bg-white border border-teal-200 hover:border-teal-300 transition"
+                >
+                  {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
+                  {copied ? t(lang, 'copied') : 'Copy'}
+                </button>
+              )}
+            </div>
+            <div className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
+              {t(lang, 'hashLabel')}
+            </div>
+            <div className="font-mono text-[11px] bg-slate-900 text-emerald-300 p-3 rounded-lg break-all">
+              {busy ? (
+                <span className="inline-flex items-center gap-2 text-slate-400">
+                  <Loader2 className="w-3 h-3 animate-spin" />
+                  {t(lang, 'hashing')}
+                </span>
+              ) : (
+                hash
+              )}
+            </div>
+          </div>
+        )}
+
+        <button
+          onClick={downloadActionPlan}
+          disabled={busy}
+          className={`mt-4 w-full py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all ${
+            !busy
+              ? 'bg-gradient-to-r from-teal-500 to-cyan-600 text-white hover:shadow-lg hover:shadow-teal-500/30 hover:-translate-y-0.5'
+              : 'bg-slate-200 text-slate-400 cursor-not-allowed'
+          }`}
+        >
+          <Download className="w-4 h-4" />
+          {t(lang, 'downloadPdf')}
+        </button>
+      </div>
     </section>
   );
 }

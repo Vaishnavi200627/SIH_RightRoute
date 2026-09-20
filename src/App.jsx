@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Shield, Globe, Languages, Award } from 'lucide-react';
 import { resolveRoute, RULESET_META } from './lib/engine';
 import { ping } from './lib/analytics';
 import { t } from './i18n/strings';
@@ -8,6 +9,15 @@ import IntakeFlow from './components/IntakeFlow';
 import RouteResult from './components/RouteResult';
 import Evidence from './components/Evidence';
 import Dashboard from './components/Dashboard';
+
+function Badge({ icon: Icon, label }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-slate-200 text-[11px] font-medium text-slate-600">
+      <Icon className="w-3 h-3 text-teal-600" />
+      {label}
+    </span>
+  );
+}
 
 export default function App() {
   const [lang, setLang] = useState('en');
@@ -50,14 +60,14 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50/30">
+      <header className="bg-white/80 backdrop-blur-lg border-b border-slate-200 sticky top-0 z-20">
+        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between gap-3">
           <button
             onClick={() => { setView('navigator'); reset(); }}
-            className="flex items-center gap-3 text-left"
+            className="flex items-center gap-3 text-left group"
           >
-            <span className="w-9 h-9 rounded-xl bg-teal-600 text-white font-bold text-sm flex items-center justify-center">
+            <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-500 to-cyan-600 text-white font-bold text-sm flex items-center justify-center shadow-lg shadow-teal-500/20 group-hover:shadow-teal-500/40 transition-shadow">
               RR
             </span>
             <span>
@@ -69,17 +79,19 @@ export default function App() {
               </span>
             </span>
           </button>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <button
               onClick={() => setView(view === 'dashboard' ? 'navigator' : 'dashboard')}
-              className="text-xs font-medium text-slate-500 hover:text-teal-600 transition"
+              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-teal-600 px-3 py-1.5 rounded-lg hover:bg-teal-50 transition"
             >
+              <Award className="w-3.5 h-3.5" />
               {view === 'dashboard' ? 'Navigator' : t(lang, 'dashboard')}
             </button>
             <button
               onClick={() => { setLangChosen(false); setView('navigator'); reset(); }}
-              className="text-xs px-2 py-1 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition"
+              className="inline-flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition font-semibold tracking-wide"
             >
+              <Languages className="w-3.5 h-3.5" />
               {lang.toUpperCase()}
             </button>
           </div>
@@ -88,11 +100,25 @@ export default function App() {
 
       <main className="max-w-3xl mx-auto px-4 py-8">
         {view === 'dashboard' ? (
-          <Dashboard />
+          <>
+            <div className="flex flex-wrap gap-2 mb-6">
+              <Badge icon={Shield} label="No data stored" />
+              <Badge icon={Globe} label="Runs in your browser" />
+              <Badge icon={Languages} label="5 Indian languages" />
+            </div>
+            <Dashboard />
+          </>
         ) : (
           <>
             {!category && !result && (
-              <CrisisPicker onPick={pickCategory} lang={lang} selected={category} />
+              <>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <Badge icon={Shield} label="No data stored" />
+                  <Badge icon={Globe} label="Runs in your browser" />
+                  <Badge icon={Languages} label="5 Indian languages" />
+                </div>
+                <CrisisPicker onPick={pickCategory} lang={lang} selected={category} />
+              </>
             )}
 
             {category && !result && !busy && (
