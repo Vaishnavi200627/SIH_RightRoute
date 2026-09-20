@@ -1,8 +1,8 @@
 import { LANGUAGES, t } from '../i18n/strings';
 
 export default function LanguagePicker({ onPick, lang }) {
-  const indian = LANGUAGES.slice(0, 5);
-  const global = LANGUAGES.slice(5);
+  const indian = LANGUAGES;
+  const global = [];
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 to-teal-50">
@@ -28,27 +28,35 @@ export default function LanguagePicker({ onPick, lang }) {
               onClick={() => onPick(l.code)}
               className="p-3 rounded-xl border-2 border-teal-100 bg-teal-50/40 hover:border-teal-400 transition text-center"
             >
-              <span className="block text-2xl mb-1">{l.flag}</span>
+              <span className="block text-lg font-bold text-teal-700 mb-1 tracking-wider">
+                {l.short}
+              </span>
               <span className="text-sm font-medium text-slate-700">{l.label}</span>
             </button>
           ))}
         </div>
 
-        <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
-          {t(lang, 'globalLanguages')}
-        </p>
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
-          {global.map(l => (
-            <button
-              key={l.code}
-              onClick={() => onPick(l.code)}
-              className="p-3 rounded-xl border-2 border-slate-200 hover:border-teal-400 transition text-center"
-            >
-              <span className="block text-2xl mb-1">{l.flag}</span>
-              <span className="text-sm font-medium text-slate-700">{l.label}</span>
-            </button>
-          ))}
-        </div>
+        {global.length > 0 && (
+          <>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2">
+              {t(lang, 'globalLanguages')}
+            </p>
+            <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+              {global.map(l => (
+                <button
+                  key={l.code}
+                  onClick={() => onPick(l.code)}
+                  className="p-3 rounded-xl border-2 border-slate-200 hover:border-teal-400 transition text-center"
+                >
+                  <span className="block text-lg font-bold text-slate-700 mb-1 tracking-wider">
+                    {l.short}
+                  </span>
+                  <span className="text-sm font-medium text-slate-700">{l.label}</span>
+                </button>
+              ))}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
