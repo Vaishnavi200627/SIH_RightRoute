@@ -1,0 +1,63 @@
+{
+  "version": "1.0.0",
+  "jurisdiction": "IN",
+  "lastReviewed": "2026-09-20",
+  "resources": {
+    "ncrp": {
+      "name": "National Cyber Crime Reporting Portal",
+      "short": "NCRP",
+      "url": "https://cybercrime.gov.in",
+      "kind": "Portal",
+      "covers": "All cybercrime categories",
+      "note": "File and track a complaint. You receive an acknowledgement number — quote it when escalating to platforms, banks, or police."
+    },
+    "1930": {
+      "name": "1930 Cyber Fraud Helpline",
+      "short": "1930",
+      "url": "tel:1930",
+      "kind": "Helpline",
+      "covers": "Financial cyber fraud",
+      "note": "Dedicated to financial fraud. Reporting here is what triggers bank-level action to freeze a transfer."
+    },
+    "certin": {
+      "name": "CERT-In",
+      "short": "CERT-In",
+      "url": "https://www.cert-in.org.in",
+      "kind": "Agency",
+      "covers": "Cybersecurity incidents",
+      "note": "India's national incident response agency. Relevant for account compromise, phishing infrastructure, and platform-level incidents."
+    },
+    "stopncii": {
+      "name": "StopNCII.org",
+      "short": "StopNCII",
+      "url": "https://stopncii.org",
+      "kind": "Takedown",
+      "covers": "Intimate image abuse — adult cases",
+      "note": "Generates a hash of your image on your own device. Participating platforms check uploads against it. Your image is never uploaded."
+    },
+    "takeitdown": {
+      "name": "Take It Down (NCMEC)",
+      "short": "Take It Down",
+      "url": "https://takeitdown.ncmec.org",
+      "kind": "Takedown",
+      "covers": "Under-18 only",
+      "note": "For people under 18, or a parent or guardian acting for them. Hash-based, same principle as StopNCII. Not available for adults."
+    },
+    "cybercrime-women": {
+      "name": "NCRP — Women and Child section",
+      "short": "NCRP Women/Child",
+      "url": "https://cybercrime.gov.in/Webform/ChildWomen.aspx",
+      "kind": "Portal section",
+      "covers": "NCII, stalking, harassment, child safety",
+      "note": "The dedicated intake form on NCRP for intimate image abuse, stalking, and offences against women and children."
+    },
+    "112": {
+      "name": "Emergency Response Support System",
+      "short": "112",
+      "url": "tel:112",
+      "kind": "Emergency",
+      "covers": "Immediate threat to physical safety",
+      "note": "India's single emergency number. Use this when there is an immediate risk to someone's safety, not for reporting after the fact."
+    }
+  }
+}

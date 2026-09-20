@@ -1,0 +1,412 @@
+{
+  "version": "1.1.0",
+  "jurisdiction": "IN",
+  "lastReviewed": "2026-09-20",
+  "notes": "Rules are sorted by ascending tier first, then descending priority. The first rule whose `when` block fully matches is selected. Tier 1 always overrides. Empty `when` matches everything (fallback).",
+  "tiers": {
+    "1": "Immediate physical safety",
+    "2": "Active financial loss",
+    "3": "Image abuse or ongoing threat",
+    "4": "General digital crisis"
+  },
+  "rules": [
+    {
+      "id": "R-EMERGENCY-PHYSICAL",
+      "tier": 1,
+      "priority": 200,
+      "label": "Immediate physical danger",
+      "when": { "physicalDanger": true },
+      "why": [
+        "You indicated you are in immediate physical danger. That takes precedence over everything else in this system.",
+        "Emergency services are the correct first contact when physical safety is at risk.",
+        "Digital reporting can wait. Physical safety cannot."
+      ],
+      "actions": [
+        "Call 112 now if you are in danger.",
+        "Move to a safe location if you can do so without further risk.",
+        "Tell one person you trust where you are.",
+        "Do not attempt to handle the digital situation until you are safe."
+      ],
+      "evidence": [
+        "Once safe, preserve any threatening messages or call logs",
+        "Note the date, time, and location of the threat",
+        "Keep a record of who you contacted and when"
+      ],
+      "resourceIds": ["112", "cybercrime-women", "ncrp"]
+    },
+    {
+      "id": "R-NCII-MINOR-THREAT",
+      "tier": 3,
+      "priority": 100,
+      "label": "NCII — Minor subject, active threat",
+      "when": { "category": "ncii", "minor": true, "threatened": true },
+      "why": [
+        "A person under 18 is involved, so this routes through child-protection channels.",
+        "An active threat makes this time-sensitive — evidence and reporting are most effective in the first 24 hours.",
+        "Take It Down (NCMEC) is built specifically for under-18 cases and uses hash-based blocking."
+      ],
+      "actions": [
+        "Do not delete the images, posts, or messages. They are your record.",
+        "Do not pay and do not negotiate. Payment confirms the threat works.",
+        "File with Take It Down (NCMEC) — built for under-18 cases.",
+        "File on NCRP and save the acknowledgement number.",
+        "Report the content inside the platform, quoting your NCRP number."
+      ],
+      "evidence": [
+        "Direct URLs of every post, profile, or album hosting the content",
+        "Screenshots showing the content, uploader handle, and timestamp",
+        "Every message containing a demand, threat, or deadline",
+        "Your NCRP acknowledgement number once filed"
+      ],
+      "resourceIds": ["takeitdown", "stopncii", "ncrp", "cybercrime-women", "112"]
+    },
+    {
+      "id": "R-NCII-MINOR",
+      "tier": 3,
+      "priority": 90,
+      "label": "NCII — Minor subject",
+      "when": { "category": "ncii", "minor": true },
+      "why": [
+        "A person under 18 is involved, so Take It Down (NCMEC) is the correct takedown service.",
+        "Hash-based blocking prevents re-uploads without your image ever being uploaded.",
+        "An NCRP complaint creates the official record both the platform and police will reference."
+      ],
+      "actions": [
+        "Do not delete the original images, posts, or messages.",
+        "File with Take It Down (NCMEC).",
+        "File on NCRP and save the acknowledgement number.",
+        "Report the content on each platform and reference your Take It Down case."
+      ],
+      "evidence": [
+        "Direct URLs of every post, profile, or album hosting the content",
+        "Screenshots showing the content, uploader handle, and timestamp",
+        "Your Take It Down case reference and NCRP acknowledgement number"
+      ],
+      "resourceIds": ["takeitdown", "stopncii", "ncrp", "cybercrime-women"]
+    },
+    {
+      "id": "R-NCII-THREAT",
+      "tier": 3,
+      "priority": 80,
+      "label": "NCII — Active blackmail or extortion",
+      "when": { "category": "ncii", "threatened": true },
+      "why": [
+        "An active threat makes this time-sensitive. Do not pay — payment does not end extortion.",
+        "StopNCII.org generates a hash on your own device so participating platforms can block re-uploads.",
+        "An NCRP complaint produces the written record that both the platform and police will ask for."
+      ],
+      "actions": [
+        "Do not pay. Do not engage. Do not negotiate.",
+        "Do not delete anything — the messages are your evidence.",
+        "Create a hash case at StopNCII.org from your own device.",
+        "File on NCRP and keep the acknowledgement number."
+      ],
+      "evidence": [
+        "Every message containing a demand, threat, or deadline",
+        "Direct URLs of every post, profile, or album hosting the content",
+        "Screenshots showing the content, uploader handle, and timestamp",
+        "Your StopNCII case reference and NCRP acknowledgement number"
+      ],
+      "resourceIds": ["stopncii", "ncrp", "cybercrime-women", "1930", "112"]
+    },
+    {
+      "id": "R-STALKING-ONGOING",
+      "tier": 3,
+      "priority": 20,
+      "label": "Stalking or harassment — ongoing",
+      "when": { "category": "stalking", "ongoing": true },
+      "why": [
+        "The behaviour is ongoing, so personal-safety steps come before platform or legal steps.",
+        "An NCRP complaint filed while the conduct is live is stronger than one filed after it stops.",
+        "This route records a pattern rather than a single incident."
+      ],
+      "actions": [
+        "Tell one person you trust where you are and what is happening.",
+        "Stop responding. Do not engage, negotiate, or explain.",
+        "Log every incident with date, time, and platform.",
+        "File on NCRP and keep the acknowledgement number.",
+        "If there is any threat of physical harm, call 112."
+      ],
+      "evidence": [
+        "A dated log of every incident — date, time, platform, what happened",
+        "Screenshots of messages, calls, and profile activity",
+        "Accounts, handles, and phone numbers used",
+        "Names of anyone who witnessed similar contact"
+      ],
+      "resourceIds": ["ncrp", "cybercrime-women", "112"]
+    },
+    {
+      "id": "R-FRAUD-MONEY-UPI",
+      "tier": 2,
+      "priority": 55,
+      "label": "UPI fraud — money already transferred",
+      "when": { "category": "fraud", "moneyLost": true, "fraudType": "upi" },
+      "why": [
+        "Money has already moved. Speed matters more than completeness — the first hours give the best chance of a freeze.",
+        "1930 is the national cyber-fraud financial helpline. A report there triggers bank-level action.",
+        "The NCRP complaint produces the written record your bank and police will ask for."
+      ],
+      "actions": [
+        "Call 1930 now. Do not wait until you have gathered everything.",
+        "Block your UPI ID in your banking app.",
+        "Ask your bank to flag the transaction and the beneficiary account.",
+        "File on NCRP the same day and note the acknowledgement number.",
+        "Do not pay any recovery fee to anyone offering to get the money back."
+      ],
+      "evidence": [
+        "Transaction IDs, UTR numbers, and bank statements showing the debit",
+        "The beneficiary UPI ID or account number",
+        "Full chat or call history with the person who contacted you",
+        "Screenshots of the offer or listing that started it"
+      ],
+      "resourceIds": ["1930", "ncrp", "certin"]
+    },
+    {
+      "id": "R-FRAUD-MONEY",
+      "tier": 2,
+      "priority": 50,
+      "label": "Financial fraud — money already transferred",
+      "when": { "category": "fraud", "moneyLost": true },
+      "why": [
+        "Money has already moved. The first hours give the best chance of a freeze at the receiving bank.",
+        "1930 is the national cyber-fraud helpline — a report there triggers bank-level action.",
+        "The NCRP complaint produces the written record your bank and police will ask for."
+      ],
+      "actions": [
+        "Call 1930 immediately.",
+        "Contact your bank's fraud line and ask them to flag the transaction.",
+        "File on NCRP the same day and keep the acknowledgement number.",
+        "Do not pay any recovery fee to anyone offering to get the money back."
+      ],
+      "evidence": [
+        "Transaction IDs, UTR numbers, and bank statements showing the debit",
+        "The beneficiary account or UPI ID",
+        "Every message or call from the person who contacted you",
+        "Screenshots of the fake listing, job offer, or investment page"
+      ],
+      "resourceIds": ["1930", "ncrp", "certin"]
+    },
+    {
+      "id": "R-NCII-SELF",
+      "tier": 4,
+      "priority": 70,
+      "label": "Content you created, being reposted without consent",
+      "when": { "category": "ncii", "ownership": "self" },
+      "why": [
+        "You created the content, so a copyright (DMCA) takedown is the fastest removal channel.",
+        "DMCA requires a signed declaration and the original URL, both of which you control.",
+        "If the content is intimate and being used to threaten you, StopNCII.org is also available."
+      ],
+      "actions": [
+        "File a DMCA takedown with the platform's copyright form.",
+        "Include the URL, your original file, and a signed declaration.",
+        "If not removed within 48 hours, escalate to the platform's Trust and Safety team.",
+        "If there is a threat attached, create a StopNCII case and file on NCRP."
+      ],
+      "evidence": [
+        "The original file and its metadata",
+        "The URL where your content is being reposted",
+        "Screenshots of the reposting account and timestamp",
+        "Your DMCA submission reference"
+      ],
+      "resourceIds": ["stopncii", "ncrp"]
+    },
+    {
+      "id": "R-NCII",
+      "tier": 4,
+      "priority": 60,
+      "label": "NCII — Non-consensual intimate image",
+      "when": { "category": "ncii" },
+      "why": [
+        "The subject is an adult, so StopNCII.org is the correct takedown service.",
+        "Hash-based blocking prevents re-uploads without your image being uploaded anywhere.",
+        "An NCRP complaint in parallel gives you a written record to escalate with."
+      ],
+      "actions": [
+        "Do not delete the original files or messages.",
+        "Create a hash case at StopNCII.org from your own device.",
+        "File on NCRP and keep the acknowledgement number.",
+        "Report the content on each platform and reference your StopNCII case."
+      ],
+      "evidence": [
+        "Direct URLs of every post, profile, or album hosting the content",
+        "Screenshots showing the content, uploader handle, and timestamp",
+        "Any message containing a demand or threat",
+        "Your StopNCII case reference and NCRP acknowledgement number"
+      ],
+      "resourceIds": ["stopncii", "ncrp", "cybercrime-women"]
+    },
+    {
+      "id": "R-FRAUD-PHISHING",
+      "tier": 4,
+      "priority": 45,
+      "label": "Phishing — attempt only, no money lost",
+      "when": { "category": "fraud", "fraudType": "phishing" },
+      "why": [
+        "No transfer has happened, so this route prioritises blocking the attempt before it completes.",
+        "CERT-In is the correct escalation for phishing infrastructure.",
+        "Reporting on NCRP records the attempt even when nothing was lost."
+      ],
+      "actions": [
+        "Do not click any further links or download any attachments.",
+        "Change your passwords from a different, trusted device.",
+        "Forward the phishing email or message to reportphishing@cert-in.org.in.",
+        "Report the attempt on NCRP so it is on record."
+      ],
+      "evidence": [
+        "The full email headers or the message thread",
+        "Screenshots of the phishing page",
+        "The URL, sender address, or phone number used",
+        "A note of the date and time you received it"
+      ],
+      "resourceIds": ["certin", "ncrp"]
+    },
+    {
+      "id": "R-FRAUD-ATTEMPT",
+      "tier": 4,
+      "priority": 40,
+      "label": "Financial fraud — attempt only",
+      "when": { "category": "fraud" },
+      "why": [
+        "No transfer has happened yet, so this route prioritises blocking the attempt.",
+        "Reporting on NCRP records the attempt even when nothing was lost.",
+        "CERT-In is the right escalation if the attempt came through a compromised link or device."
+      ],
+      "actions": [
+        "Do not complete any pending payment.",
+        "Share no further OTP, PIN, or CVV.",
+        "Report the number, UPI ID, or listing on NCRP.",
+        "Warn your bank and ask them to watch the account."
+      ],
+      "evidence": [
+        "The phone numbers, UPI IDs, or profiles used to contact you",
+        "Screenshots of the offer, listing, or message thread",
+        "Call logs and message timestamps"
+      ],
+      "resourceIds": ["ncrp", "1930", "certin"]
+    },
+    {
+      "id": "R-ACCOUNT-HACKED",
+      "tier": 4,
+      "priority": 35,
+      "label": "Account takeover",
+      "when": { "category": "account", "accountType": "hacked" },
+      "why": [
+        "The account is compromised, so regaining control comes before anything is reported.",
+        "CERT-In is the correct escalation for account compromise.",
+        "An NCRP filing documents the compromise in case the account was used to commit fraud."
+      ],
+      "actions": [
+        "Change the password from a different, trusted device.",
+        "Enable two-factor authentication, then revoke all active sessions.",
+        "Check and revert any recovery email, phone number, or forwarding rule the attacker added.",
+        "Warn your contacts that the account may have sent messages on your behalf.",
+        "File on NCRP; notify CERT-In if a work account is involved."
+      ],
+      "evidence": [
+        "The time you first noticed the compromise",
+        "Any new login or password changed alert emails",
+        "Messages or posts sent from the account that you did not send",
+        "The attacker's recovery email or phone number, if added"
+      ],
+      "resourceIds": ["certin", "ncrp", "1930"]
+    },
+    {
+      "id": "R-ACCOUNT-LOCKED",
+      "tier": 4,
+      "priority": 30,
+      "label": "Account locked or suspended",
+      "when": { "category": "account", "accountType": "locked" },
+      "why": [
+        "This is a platform-level action, so the platform's own appeal process is the correct first step.",
+        "Having proof of ownership ready speeds up the appeal considerably.",
+        "If the lock was triggered by someone else's action, an NCRP filing records it."
+      ],
+      "actions": [
+        "Check your email for the reason for the lock or suspension.",
+        "Prepare an appeal with proof of identity and ownership.",
+        "Contact platform support through the official appeal process.",
+        "Enable 2FA once the account is restored.",
+        "File on NCRP if you believe the lock was triggered by someone else."
+      ],
+      "evidence": [
+        "The email or notification you received about the lock",
+        "Any identity documents the platform has previously accepted",
+        "The date the lock started and any case number the platform gave you"
+      ],
+      "resourceIds": ["ncrp"]
+    },
+    {
+      "id": "R-ACCOUNT",
+      "tier": 4,
+      "priority": 25,
+      "label": "Account issue — general",
+      "when": { "category": "account" },
+      "why": [
+        "The account is affected but the exact type is unclear, so this route starts with the recovery basics.",
+        "CERT-In is the correct escalation if compromise is confirmed.",
+        "An NCRP filing documents the incident if the account was used to harm others."
+      ],
+      "actions": [
+        "Change the password from a different, trusted device.",
+        "Enable two-factor authentication and revoke any sessions you do not recognise.",
+        "Review linked apps and remove anything unfamiliar.",
+        "File on NCRP if the account was used to commit fraud or harassment."
+      ],
+      "evidence": [
+        "The date you first noticed unusual activity",
+        "Any security alert emails",
+        "Screenshots of activity you did not authorise",
+        "The platform's case reference, if one was given"
+      ],
+      "resourceIds": ["certin", "ncrp"]
+    },
+    {
+      "id": "R-STALKING",
+      "tier": 4,
+      "priority": 15,
+      "label": "Stalking or harassment — not ongoing",
+      "when": { "category": "stalking" },
+      "why": [
+        "The conduct is not currently ongoing, so this route prioritises building a complete record.",
+        "NCRP accepts pattern-based complaints — one detailed filing is stronger than scattered reports.",
+        "Reporting puts the conduct on record, which matters if it restarts."
+      ],
+      "actions": [
+        "Write out a single timeline of everything that happened, with dates.",
+        "File one NCRP complaint covering the full pattern.",
+        "Keep the originals — do not delete messages even if you have blocked the person.",
+        "If it restarts, file an update referencing your existing complaint number."
+      ],
+      "evidence": [
+        "Your written timeline covering the full period",
+        "Screenshots of messages, calls, and profile activity",
+        "Accounts, handles, and phone numbers used",
+        "Any prior complaint or acknowledgement numbers"
+      ],
+      "resourceIds": ["ncrp", "cybercrime-women"]
+    },
+    {
+      "id": "R-DEFAULT",
+      "tier": 4,
+      "priority": 0,
+      "label": "General cybercrime route",
+      "when": {},
+      "why": [
+        "Your answers did not match a specific crisis pattern, so this falls back to the general reporting route.",
+        "NCRP is the single entry point for all cybercrime categories in India."
+      ],
+      "actions": [
+        "File on NCRP describing what happened in your own words.",
+        "Keep every message, screenshot, and reference number.",
+        "If money was involved, call 1930."
+      ],
+      "evidence": [
+        "Screenshots of everything relevant",
+        "Any reference numbers you have been given",
+        "A short written timeline of events"
+      ],
+      "resourceIds": ["ncrp", "certin"]
+    }
+  ]
+}
