@@ -17,3 +17,50 @@ Privacy-first crisis navigator for cybercrime in India. Given a short intake, Ri
 - It is not legal advice.
 
 ## Structure
+src/data/crisis-rules.json The ruleset. This is the policy layer.
+src/data/resources.json Every official resource, keyed by ID.
+src/lib/engine.js Reads the ruleset, matches intake, returns route + why.
+src/lib/hash.js SHA-256 via Web Crypto.
+src/lib/analytics.js Fire-and-forget ping. Sends only category + language.
+server/ Optional. Serves the ruleset and anonymous counters.
+
+text
+
+## Running it
+
+Backend (optional, for the Impact Dashboard):
+
+```bash
+cd server
+npm install
+npm start
+Frontend:
+
+bash
+npm install
+npm run dev
+Frontend runs at http://localhost:5173. If the backend is not running, the app still works — the engine runs client-side.
+
+Ruleset
+The ruleset lives in src/data/crisis-rules.json. Rules are sorted by descending priority; the first rule whose when block fully matches the intake is selected. To add a route, add an object there. No code changes required.
+
+Deployment
+Frontend: Vercel. Set VITE_API_URL to your Render backend URL.
+
+Backend: Render. Root directory must be the repo root, not server/, because the server reads the ruleset from ../src/data/crisis-rules.json.
+
+License
+MIT.
+
+text
+
+
+### 6. `public/favicon.svg`
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0f766e"/>
+  <text x="32" y="42" font-family="Inter, system-ui, sans-serif" font-size="26" font-weight="700" text-anchor="middle" fill="#ffffff">RR</text>
+</svg>
+
+

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Shield, Globe, Languages, Award } from 'lucide-react';
+import { Shield, Globe, Languages, ClipboardList } from 'lucide-react';
 import { resolveRoute, RULESET_META } from './lib/engine';
 import { ping } from './lib/analytics';
 import { t } from './i18n/strings';
@@ -7,12 +7,12 @@ import LanguagePicker from './components/LanguagePicker';
 import CrisisPicker from './components/CrisisPicker';
 import IntakeFlow from './components/IntakeFlow';
 import RouteResult from './components/RouteResult';
-import Evidence from './components/Evidence';
-import Dashboard from './components/Dashboard';
+import Evidence, { downloadComplaintDraft } from './components/Evidence';
+import CaseSummary from './components/CaseSummary';
 
 function Badge({ icon: Icon, label }) {
   return (
-    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-slate-200 text-[11px] font-medium text-slate-600">
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-slate-200 text-[11px] font-medium text-slate-600 shadow-sm">
       <Icon className="w-3 h-3 text-teal-600" />
       {label}
     </span>
@@ -27,6 +27,7 @@ export default function App() {
   const [intake, setIntake] = useState({});
   const [result, setResult] = useState(null);
   const [busy, setBusy] = useState(false);
+  const [evidenceData, setEvidenceData] = useState(null);
 
   function pickLanguage(code) {
     setLang(code);
@@ -34,8 +35,9 @@ export default function App() {
   }
 
   function pickCategory(id) {
+    const ts = Date.now();
     setCategory(id);
-    setIntake({ category: id });
+    setIntake({ category: id, localRefId: `RR-${ts}`, refTimestamp: ts });
     setResult(null);
   }
 
@@ -53,6 +55,7 @@ export default function App() {
     setCategory(null);
     setIntake({});
     setResult(null);
+    setEvidenceData(null);
   }
 
   if (!langChosen) {
@@ -81,11 +84,11 @@ export default function App() {
           </button>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => setView(view === 'dashboard' ? 'navigator' : 'dashboard')}
-              className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-slate-600 hover:text-teal-600 px-3 py-1.5 rounded-lg hover:bg-teal-50 transition"
+              onClick={() => setView(view === 'summary' ? 'navigator' : 'summary')}
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-700 hover:text-teal-700 px-3 py-1.5 rounded-lg hover:bg-teal-50 border border-slate-200 bg-white transition shadow-sm"
             >
-              <Award className="w-3.5 h-3.5" />
-              {view === 'dashboard' ? 'Navigator' : t(lang, 'dashboard')}
+              <ClipboardList className="w-3.5 h-3.5 text-teal-600" />
+              {view === 'summary' ? (t(lang, 'navigator') || 'Navigator') : t(lang, 'caseSummary')}
             </button>
             <button
               onClick={() => { setLangChosen(false); setView('navigator'); reset(); }}
@@ -99,14 +102,21 @@ export default function App() {
       </header>
 
       <main className="max-w-3xl mx-auto px-4 py-8">
-        {view === 'dashboard' ? (
+        {view === 'summary' ? (
           <>
             <div className="flex flex-wrap gap-2 mb-6">
               <Badge icon={Shield} label="No data stored" />
               <Badge icon={Globe} label="Runs in your browser" />
               <Badge icon={Languages} label="5 Indian languages" />
             </div>
-            <Dashboard />
+            <CaseSummary
+              intake={intake}
+              result={result}
+              lang={lang}
+              evidence={evidenceData}
+              onDownloadDraft={() => downloadComplaintDraft(lang, intake, result, evidenceData)}
+              onNavigateBack={() => setView('navigator')}
+            />
           </>
         ) : (
           <>
@@ -144,7 +154,13 @@ export default function App() {
             {result && (
               <>
                 <RouteResult result={result} lang={lang} onRestart={reset} />
-                <Evidence lang={lang} result={result} />
+                <Evidence
+                  lang={lang}
+                  result={result}
+                  intake={intake}
+                  evidenceData={evidenceData}
+                  onEvidenceChange={setEvidenceData}
+                />
               </>
             )}
           </>

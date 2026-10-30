@@ -65,6 +65,10 @@ export const strings = {
       'RightRoute is a routing aid, not legal advice. It does not file anything on your behalf, does not store your answers, and does not produce court-admissible evidence. It points you to the authorities that do.',
 
     dashboard: 'Impact dashboard',
+    caseSummary: 'Case Summary',
+    evidenceIntegrityRecord: 'Evidence Integrity Record',
+    downloadDraft: 'Download Draft Complaint (PDF)',
+    navigator: 'Navigator',
     footerVersion: 'Rules v',
     evaluating: 'Matching your answers against the ruleset…'
   },
@@ -135,6 +139,10 @@ export const strings = {
       'RightRoute एक मार्गदर्शन उपकरण है, कानूनी सलाह नहीं। यह आपकी ओर से कुछ भी दर्ज नहीं करता, आपके उत्तर संग्रहीत नहीं करता, और अदालत में स्वीकार्य साक्ष्य उत्पन्न नहीं करता। यह आपको उन अधिकारियों की ओर इंगित करता है जो ऐसा करते हैं।',
 
     dashboard: 'प्रभाव डैशबोर्ड',
+    caseSummary: 'मामला सारांश',
+    evidenceIntegrityRecord: 'साक्ष्य अखंडता रिकॉर्ड',
+    downloadDraft: 'ड्राफ्ट शिकायत (PDF) डाउनलोड करें',
+    navigator: 'नेविगेटर',
     footerVersion: 'नियम v',
     evaluating: 'आपके उत्तरों को नियमों से मिलाया जा रहा है…'
   },
@@ -205,6 +213,10 @@ export const strings = {
       'RightRoute एक मार्गदर्शन साधन आहे, कायदेशीर सल्ला नाही. हे तुमच्यावतीने काहीही दाखल करत नाही, तुमची उत्तरे संग्रहित करत नाही आणि न्यायालयात स्वीकारार्ह पुरावा तयार करत नाही. हे तुम्हाला ते करणाऱ्या अधिकाऱ्यांकडे निर्देशित करते.',
 
     dashboard: 'प्रभाव डॅशबोर्ड',
+    caseSummary: 'प्रकरण सारांश',
+    evidenceIntegrityRecord: 'पुरावा अखंडता नोंद',
+    downloadDraft: 'तक्रार मसुदा (PDF) डाउनलोड करा',
+    navigator: 'दिशादर्शक',
     footerVersion: 'नियम v',
     evaluating: 'तुमची उत्तरे नियमांशी जुळवत आहोत…'
   },
@@ -275,6 +287,10 @@ export const strings = {
       'RightRoute ஒரு வழிகாட்டல் உதவி, சட்ட ஆலோசனை அல்ல. இது உங்கள் சார்பாக எதையும் தாக்கல் செய்யாது, உங்கள் பதில்களை சேமிக்காது, நீதிமன்றத்தில் ஏற்கத்தக்க ஆதாரத்தை உருவாக்காது. அதைச் செய்யும் அதிகாரிகளை நோக்கி உங்களை வழிநடத்துகிறது.',
 
     dashboard: 'தாக்க டாஷ்போர்டு',
+    caseSummary: 'வழக்கு சுருக்கம்',
+    evidenceIntegrityRecord: 'சான்றாதார ஒருமைப்பாடு பதிவு',
+    downloadDraft: 'வரைவு புகாரை (PDF) பதிவிறக்கவும்',
+    navigator: 'வழிகாட்டி',
     footerVersion: 'விதிகள் v',
     evaluating: 'உங்கள் பதில்களை விதிகளுடன் பொருத்துகிறோம்…'
   },
@@ -345,17 +361,21 @@ export const strings = {
       'RightRoute একটি রাউটিং সহায়তা, আইনি পরামর্শ নয়। এটি আপনার পক্ষে কিছু দায়ের করে না, আপনার উত্তর সংরক্ষণ করে না এবং আদালতে গ্রহণযোগ্য প্রমাণ উৎপন্ন করে না। এটি আপনাকে সেই কর্তৃপক্ষের দিকে নির্দেশ করে যারা তা করে।',
 
     dashboard: 'প্রভাব ড্যাশবোর্ড',
+    caseSummary: 'মামলার সারাংশ',
+    evidenceIntegrityRecord: 'প্রমাণ অখণ্ডতা রেকর্ড',
+    downloadDraft: 'খসড়া অভিযোগ (PDF) ডাউনলোড করুন',
+    navigator: 'নেভিগেটর',
     footerVersion: 'নিয়ম v',
     evaluating: 'আপনার উত্তর নিয়মের সাথে মেলানো হচ্ছে…'
   }
 };
 
 export const LANGUAGES = [
-  { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'hi', label: 'हिन्दी', flag: '🇮🇳' },
-  { code: 'mr', label: 'मराठी', flag: '🇮🇳' },
-  { code: 'ta', label: 'தமிழ்', flag: '🇮🇳' },
-  { code: 'bn', label: 'বাংলা', flag: '🇮🇳' }
+  { code: 'en', label: 'English', short: 'EN' },
+  { code: 'hi', label: 'हिन्दी', short: 'HI' },
+  { code: 'mr', label: 'मराठी', short: 'MR' },
+  { code: 'ta', label: 'தமிழ்', short: 'TA' },
+  { code: 'bn', label: 'বাংলা', short: 'BN' }
 ];
 
 export function t(lang, key) {
